@@ -1,13 +1,28 @@
 var express = require('express');
+
+const sql_operations = require("./mysql_conn/mysql_butt")
+
 var app = express();
+
+
 
 const PORT = 25000;
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/', function(req, res) {
-    console.log("Enter here!!!")
-  res.send('hello world');
+app.get('/init', async function(req, res) {
+    const TITLE = await sql_operations.title_company()
+    const QUESTIONS = await sql_operations.questions_list()
+    //res.send(TITLE);
+    res.send([TITLE,QUESTIONS]);
 });
+
+
+
+
+
+
+
+
+// --------------------------------------------------------------------------------------------------------------
   
 app.listen(PORT, (error) =>{
     if(!error)
